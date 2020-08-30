@@ -9,18 +9,21 @@ function App() {
   const { data, error } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=1', fetcher)
   const { data: data2, error: error2 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=2', fetcher)
   const { data: data3, error: error3 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=3', fetcher)
+  const { data: data4, error: error4 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=4', fetcher)
+  const { data: data5, error: error5 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=5', fetcher)
+
   const actors = []
   const movies = []
 
-  if (error || error2 || error3) return(
+  if (error || error2 || error3 || error4 || error5) return(
     <div>Failed to load</div>
   )
 
-  if (!data || !data2 || !data3) return(
+  if (!data || !data2 || !data3 || !data4 || !data5) return(
     <div>Loading...</div>
   )
 
-  const actorsResults = [...data.results, ...data2.results, ...data3.results]
+  const actorsResults = [...data.results, ...data2.results, ...data3.results, ...data4.results, ...data5.results]
 
   actorsResults.forEach(actor => {
     actors.push({

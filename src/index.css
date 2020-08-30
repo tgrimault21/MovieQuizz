@@ -16,6 +16,7 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .questions__score {
@@ -24,8 +25,14 @@ body {
 }
 
 .questions__question {
-  margin-bottom: 80px;
+  margin-bottom: 20px;
   font-size: large;
+}
+
+.questions__pictures {
+  margin-bottom: 70px;
+  display: flex;
+  justify-content: center;
 }
 
 .questions__buttons-group {
