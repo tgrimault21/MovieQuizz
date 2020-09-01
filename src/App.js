@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import Questions from './components/Questions';
+import Game from './components/Game';
 import useSWR from 'swr';
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
@@ -46,7 +45,10 @@ function App() {
 
   return (
     <div className="App">
-      <Questions actors={actors.filter(actor => actor.movies.length > 0)} movies={movies.filter(movie => movie.name !== undefined)}/>
+      <div className="header">
+        MovieQuizz
+      </div>
+      <Game actors={actors.filter(actor => actor.movies.length > 0)} movies={movies.filter(movie => movie.name !== undefined)}/>
     </div>
   );
 }

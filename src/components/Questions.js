@@ -65,6 +65,9 @@ export default function Questions(props) {
         // If correct answer
         if ((yes && isCorrect) || (!yes && !isCorrect)) {
           setScore(score+1)
+          props.score(score+1)
+        } else {
+          props.gameOver(true)
         }
 
         // Stop before reaching the last question 
@@ -79,7 +82,6 @@ export default function Questions(props) {
   return(
     questionsList.length > 0 ?
     (<div className="questions__card">
-      <div className="questions__score">Score : {score}</div>
       <div className="questions__question">Did <b>{questionsList[questionCount].actor}</b> play in <b>{questionsList[questionCount].movie}</b> ?</div>
       <div className="questions__pictures">
         <img src={"http://image.tmdb.org/t/p/w185" + questionsList[questionCount].portrait} />
