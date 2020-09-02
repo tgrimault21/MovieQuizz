@@ -1,6 +1,8 @@
 import React from 'react';
 import Game from './components/Game';
+import Welcome from './components/Welcome';
 import useSWR from 'swr';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
@@ -45,10 +47,20 @@ function App() {
 
   return (
     <div className="App">
-      <div className="header">
-        MovieQuizz
-      </div>
-      <Game actors={actors.filter(actor => actor.movies.length > 0)} movies={movies.filter(movie => movie.name !== undefined)}/>
+      <Router>
+        <Switch>
+          <Route path="/quizz">
+            <div className="header">
+              <Link to="/">MovieQuizz</Link>
+            </div>
+            <Game actors={actors.filter(actor => actor.movies.length > 0)} movies={movies.filter(movie => movie.name !== undefined)}/>
+          </Route>
+          <Route path="/">
+            <Welcome />
+          </Route>
+        </Switch>
+      </Router>
+      
     </div>
   );
 }

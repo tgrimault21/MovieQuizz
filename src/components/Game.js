@@ -5,6 +5,8 @@ export default function Game(props) {
   const [timer, setTimer] = useState(60);
   const [over, setOver] = useState(false)
   const [score, setScore] = useState(0)
+  const [highScore, setHighScore] = useState(localStorage.getItem("highScore") || 0)
+  const [newHigh, setNewHigh] = useState(false)
 
   useEffect(() => {
     let interval = null;
@@ -16,7 +18,14 @@ export default function Game(props) {
         clearInterval(interval);
       }
     }, 1000);
-    if (over) setTimer(0)
+    if (over) {
+      setTimer(0)
+      if (!highScore || highScore < score) {
+        setHighScore(score)
+        setNewHigh(true)
+        localStorage.setItem("highScore", score)
+      }
+    }
     return () => clearInterval(interval);
   }, [timer]);
 
@@ -27,7 +36,7 @@ export default function Game(props) {
   return(
     <div className="game__container">
       <div className="game__infos">
-        <div>High Score: </div>
+        <div>High Score: <b>{highScore}</b></div>
         <div>Timer: <b>{timer}</b></div>
         <div>Score: <b>{score}</b></div>
       </div>
@@ -35,6 +44,7 @@ export default function Game(props) {
         <div className={over ? "game-over" : "hidden"}>
           <h1>Game Over!</h1>
           <p>Score : <b>{score}</b></p>
+          {newHigh ? <p>New HighScore, Congratulations !</p> : ''}
           <button className="questions__button" onClick={handleClick}><img src="update.svg" /></button>
         </div>
       </div>
