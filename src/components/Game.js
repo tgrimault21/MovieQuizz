@@ -22,8 +22,10 @@ export default function Game(props) {
       setTimer(0)
       if (!highScore || highScore < score) {
         setHighScore(score)
-        setNewHigh(true)
         localStorage.setItem("highScore", score)
+        if (score !== 0) {
+          setNewHigh(true)
+        }
       }
     }
     return () => clearInterval(interval);
@@ -44,7 +46,7 @@ export default function Game(props) {
         <div className={over ? "game-over" : "hidden"}>
           <h1>Game Over!</h1>
           <p>Score : <b>{score}</b></p>
-          {newHigh ? <p>New HighScore, Congratulations !</p> : ''}
+          {newHigh ? <p>New High Score!</p> : ''}
           <button className="questions__button" onClick={handleClick}><img src="update.svg" /></button>
         </div>
       </div>

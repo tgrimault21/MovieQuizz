@@ -85,7 +85,7 @@ export default function Questions(props) {
       <div className="questions__question">Did <b>{questionsList[questionCount].actor}</b> play in <b>{questionsList[questionCount].movie}</b> ?</div>
       <div className="questions__pictures">
         <img src={"http://image.tmdb.org/t/p/w185" + questionsList[questionCount].portrait} />
-        <img src="thunder.svg" />
+        <img id="thunder" src="thunder.svg" />
         <img src={"http://image.tmdb.org/t/p/w185" + questionsList[questionCount].poster} />
       </div>
       <div className="questions__buttons-group">
