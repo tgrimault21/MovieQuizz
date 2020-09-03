@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-// Randomly shuffle an array
+/**
+ * Randomly shuffle an array
+ * @param {*} array the array to shuffle
+ */
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -20,6 +23,7 @@ export default function Questions(props) {
   useEffect(() => {
     const questions = []
     
+    // Not to have the same order of actors in the questions
     shuffle(props.actors)
     
     props.actors.forEach(actor => {
@@ -50,7 +54,14 @@ export default function Questions(props) {
     setQuestionsList(questions)
   }, [])
 
+  /**
+   * Game function, triggered when the user answers
+   * @param {*} yes boolean, the answer the user gives
+   * @param {*} actor the actor in the question
+   * @param {*} movie the movie in the question
+   */
   function answer(yes, actor, movie) {
+    //Find if the movie is in the actor's filmography
     fetch('https://api.themoviedb.org/3/person/' + actor.id + '/movie_credits?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US', {
         method: "GET",
         dataType: "JSON",
@@ -94,6 +105,6 @@ export default function Questions(props) {
       </div>
     </div>)
     :
-    ''
+    <img className="loading" src="/images/spinLoad.svg"/>
   )
 }

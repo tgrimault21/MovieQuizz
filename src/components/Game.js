@@ -8,8 +8,44 @@ export default function Game(props) {
   const [highScore, setHighScore] = useState(localStorage.getItem("highScore") || 0)
   const [newHigh, setNewHigh] = useState(false)
 
+  // SDK Facebook
+  window.fbAsyncInit = function() {
+    window.FB.init({
+      appId            : '1249033968791061',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v2.10'
+    });
+    window.FB.AppEvents.logPageView();
+  };
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  } (document, 'script', 'facebook-jssdk'));
+
+  // SDK Twitter
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+    return t;
+  }(document, "script", "twitter-wjs"));
+
   useEffect(() => {
     let interval = null;
+    // Set the timer
     interval = setInterval(() => {
       if (timer > 0) {
         setTimer(timer => timer - 1);
@@ -19,10 +55,27 @@ export default function Game(props) {
       }
     }, 1000);
     if (over) {
+      // If game over, reset timer and set high score if needed
       setTimer(0)
       if (!highScore || highScore < score) {
         setHighScore(score)
         localStorage.setItem("highScore", score)
+
+        window.FB.ui({
+          method: 'share_open_graph',
+          action_type: 'og.likes',
+          action_properties: JSON.stringify({
+            object: {
+              'og:url': 'http://localhost:3000',
+              'og:title': 'Oui',
+              'og:description': 'Bravo'
+            }
+          })	
+        },
+        function (response) {
+          // Action after response
+        });
+
         if (score !== 0) {
           setNewHigh(true)
         }
@@ -31,6 +84,9 @@ export default function Game(props) {
     return () => clearInterval(interval);
   }, [timer]);
 
+  /**
+   * Refresh the page when the user wants to retry
+   */
   function handleClick() {
     window.location.reload(true)
   }
@@ -46,7 +102,24 @@ export default function Game(props) {
         <div className={over ? "game-over" : "hidden"}>
           <h1>Game Over!</h1>
           <p>Score : <b>{score}</b></p>
-          {newHigh ? <p>New High Score!</p> : ''}
+          {newHigh ?
+            <div className="game-over__high-score">
+              <p>New High Score!</p>
+              <p id="blue">Share your score with your friends</p>
+              <div className="game-over__share-logos">
+                <a class="twitter-share-button"
+                  href="https://twitter.com/intent/tweet?text=Check%20my%20new%20high%20score%20on%20MovieQuizz!%20Try%20to%20beat%20me%20on%20"
+                  data-size="large">
+                  Tweet
+                </a>
+                <div class="fb-share-button" data-href="http://localhost:3000/" data-layout="button" data-size="large">
+                  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>
+                </div>
+              </div>
+            </div>
+            : 
+            ''
+          }
           <button className="questions__button" onClick={handleClick}><img src="update.svg" /></button>
         </div>
       </div>
