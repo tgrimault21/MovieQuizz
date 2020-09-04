@@ -1,68 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# MovieQuizz
 
-## Available Scripts
+## Run the project
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
+```bash
+npm i
+npm start
+```
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Specs
 
-### `npm test`
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Library used :
+- `SWR` (https://github.com/vercel/swr) for data fetching.
 
-### `npm run build`
+## Improvement ideas
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Make several types of quizz
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+In the homepage, the user could chose between 3 types of quizz :
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- The existing one
+- A "Did `a film director` directed `a movie` ?" yes or no Quizz, like the actor one, with same specifications
+- A "Which one of these actors didn't play in `a movie` ?" Quizz, with a choice of 4 actors, 3 of them being in the top casting of the movie (a popular one), and the last one being a popular actor.
+The list of movies and actors will be the same as the existing Quizz. For each question, an actor in the list will be chosen, and a movie he's known for will be randomly picked. 2 other actors in the top 5 casting of the movie will be randomly picked as well. The last actor will be randomly took in the actors' list, as long as he's not part of the chosen movie.
+There will be 10 questions, and the game ends when the user answered all 10 questions. Each question has a time limit of 10 secondes (maybe 15), and if the user hasn't answered in the given time, the next question is displayed.
 
-### `npm run eject`
+### Develop a backend
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The weakness of the frontend here is that the users can cheat by easily accessing the data model. While here it's not possible to just look if the answer is yes or no (the answer is calculated when the user clicks on yes or no), it's still possible to access the details of each actor. 
+Even though it could take some time to do that, and it could be not worth it considering the limited time of 60 secondes, it's still possible, and a better choice could be to implement a backend that sends the array of questions to the frontend, and the answer of each question when the user clicks on it. Then, all details about each movie or actor would be hidden.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Comments
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- The facebook sharing link doesn't work in local, but I still decided to keep it considering the time I took to document myself about how to make it works, and because it's visually more pleasant.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- I first began coding the "core" of the quizz, asking questions to the user and making the answer system working. Then, I displayed the pictures of actor and movie in the question, because it was almost nothing to add to the code. The second most important feature was how to end the game, so I decided to develop that before the 2 last tasks. I always prefer to start coding main features and most complex ones, and then finish with the design, in order to have something working in time.
