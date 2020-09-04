@@ -75,12 +75,26 @@ export default function Game(props) {
     window.location.reload(true)
   }
 
+  /**
+   * Change color of the score to notify a change
+   */
+  function visualScoreIncrement() {
+    const score = document.getElementById("score")
+
+    score.classList.add("score-incr--show")
+    setInterval(() => {
+      score.classList.remove("score-incr--show")
+    }, 50)
+  }
+
   return(
     <div className="game__container">
       <div className="game__infos">
         <div>High Score: <b>{highScore}</b></div>
         <div>Timer: <b>{timer}</b></div>
-        <div>Score: <b>{score}</b></div>
+        <div>
+          Score: <b id="score" className="infos__score">{score}</b>
+        </div>
       </div>
       <div className="game-over__container">
         <div className={over ? "game-over" : "hidden"}>
@@ -93,20 +107,25 @@ export default function Game(props) {
           }
           <p id="game-over__share-text">Share your score with your friends</p>
           <div className="game-over__share-logos">
-            <a class="twitter-share-button"
+            <a className="twitter-share-button"
               href={"https://twitter.com/intent/tweet?text=Try%20to%20beat%20my%20streak%20of%20"+score+"%20correct%20answers%20on%20MovieQuizz!%0DAccept%20the%20challenge%20here%20->%20"}
               data-size="large">
               Tweet
             </a>
-            <div class="fb-share-button" data-href="http://localhost:3000/" data-layout="button" data-size="large">
-              <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>
+            <div className="fb-share-button" data-href="http://localhost:3000/" data-layout="button" data-size="large">
+              <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Partager</a>
             </div>
           </div>
-          <button className="questions__button" onClick={handleClick}><img src="update.svg" /></button>
+          <button className="questions__button" onClick={handleClick}><img src="update.svg" alt="refresh"/></button>
         </div>
       </div>
       <div className={over ? "backdrop" : "not-displayed"}></div>
-      <Questions actors={props.actors} movies={props.movies} score={scoreUpdate => setScore(scoreUpdate)} gameOver={gameOver => setOver(gameOver)}/>
+      <Questions  actors={props.actors} 
+                  movies={props.movies} 
+                  score={scoreUpdate => setScore(scoreUpdate)} 
+                  gameOver={gameOver => setOver(gameOver)} 
+                  visualScoreIncr={visualScoreIncrement}
+      />
     </div>
   )
 }

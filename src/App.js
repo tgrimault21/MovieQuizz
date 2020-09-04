@@ -23,7 +23,7 @@ function App() {
 
   // Loading screen when fetching data
   if (!data || !data2 || !data3 || !data4 || !data5) return(
-    <img className="loading" src="spinLoad.svg"/>
+    <img className="loading" src="spinLoad.svg" alt="loading"/>
   )
 
   // When data are fetched

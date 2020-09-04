@@ -77,6 +77,8 @@ export default function Questions(props) {
         if ((yes && isCorrect) || (!yes && !isCorrect)) {
           setScore(score+1)
           props.score(score+1)
+          props.visualScoreIncr()
+          visualSuccessCheck()
         } else {
           props.gameOver(true)
         }
@@ -90,21 +92,34 @@ export default function Questions(props) {
       })
   }
 
+  /**
+   * Notify the user when an answer is correct, with a green check
+   */
+  function visualSuccessCheck() {
+    const score = document.getElementById("success-check")
+    
+    score.classList.add("questions__success--start")
+    setInterval(() => {
+      score.classList.remove("questions__success--start")
+    }, 50)
+  }
+
   return(
     questionsList.length > 0 ?
     (<div className="questions__card">
+      <div id="success-check" className="questions__success"></div>
       <div className="questions__question">Did <b>{questionsList[questionCount].actor}</b> play in <b>{questionsList[questionCount].movie}</b> ?</div>
       <div className="questions__pictures">
-        <img src={"http://image.tmdb.org/t/p/w185" + questionsList[questionCount].portrait} />
-        <img id="thunder" src="thunder.svg" />
-        <img src={"http://image.tmdb.org/t/p/w185" + questionsList[questionCount].poster} />
+        <img src={"http://image.tmdb.org/t/p/w185" + questionsList[questionCount].portrait} alt="actor"/>
+        <img id="thunder" src="thunder.svg" alt="thunder"/>
+        <img src={"http://image.tmdb.org/t/p/w185" + questionsList[questionCount].poster} alt="movie"/>
       </div>
       <div className="questions__buttons-group">
-        <button className="questions__button questions__button--yes" onClick={() => answer(true, props.actors[questionCount], questionsList[questionCount].movie)}><img src="check.svg" /></button>
-        <button className="questions__button questions__button--no" onClick={() => answer(false, props.actors[questionCount], questionsList[questionCount].movie)}><img src="delete.svg" /></button>
+        <button className="questions__button questions__button--yes" onClick={() => answer(true, props.actors[questionCount], questionsList[questionCount].movie)}><img src="check.svg" alt="Yes"/></button>
+        <button className="questions__button questions__button--no" onClick={() => answer(false, props.actors[questionCount], questionsList[questionCount].movie)}><img src="delete.svg" alt="No"/></button>
       </div>
     </div>)
     :
-    <img className="loading" src="/images/spinLoad.svg"/>
+    <img className="loading" src="/images/spinLoad.svg" alt="loading"/>
   )
 }
