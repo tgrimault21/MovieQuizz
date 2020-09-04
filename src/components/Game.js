@@ -60,22 +60,6 @@ export default function Game(props) {
       if (!highScore || highScore < score) {
         setHighScore(score)
         localStorage.setItem("highScore", score)
-
-        window.FB.ui({
-          method: 'share_open_graph',
-          action_type: 'og.likes',
-          action_properties: JSON.stringify({
-            object: {
-              'og:url': 'http://localhost:3000',
-              'og:title': 'Oui',
-              'og:description': 'Bravo'
-            }
-          })	
-        },
-        function (response) {
-          // Action after response
-        });
-
         if (score !== 0) {
           setNewHigh(true)
         }
@@ -103,23 +87,21 @@ export default function Game(props) {
           <h1>Game Over!</h1>
           <p>Score : <b>{score}</b></p>
           {newHigh ?
-            <div className="game-over__high-score">
-              <p>New High Score!</p>
-              <p id="blue">Share your score with your friends</p>
-              <div className="game-over__share-logos">
-                <a class="twitter-share-button"
-                  href="https://twitter.com/intent/tweet?text=Check%20my%20new%20high%20score%20on%20MovieQuizz!%20Try%20to%20beat%20me%20on%20"
-                  data-size="large">
-                  Tweet
-                </a>
-                <div class="fb-share-button" data-href="http://localhost:3000/" data-layout="button" data-size="large">
-                  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>
-                </div>
-              </div>
-            </div>
+            <p>New High Score!</p>
             : 
             ''
           }
+          <p id="game-over__share-text">Share your score with your friends</p>
+          <div className="game-over__share-logos">
+            <a class="twitter-share-button"
+              href={"https://twitter.com/intent/tweet?text=Try%20to%20beat%20my%20streak%20of%20"+score+"%20correct%20answers%20on%20MovieQuizz!%0DAccept%20the%20challenge%20here%20->%20"}
+              data-size="large">
+              Tweet
+            </a>
+            <div class="fb-share-button" data-href="http://localhost:3000/" data-layout="button" data-size="large">
+              <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>
+            </div>
+          </div>
           <button className="questions__button" onClick={handleClick}><img src="update.svg" /></button>
         </div>
       </div>

@@ -73,10 +73,6 @@ body {
   color: rgb(255,0,0);
 }
 
-#blue {
-  color: #3d47d9;
-}
-
 .welcome__container a {
   padding: 20px 30px;
   background-color: #3d47d9;
@@ -231,17 +227,13 @@ body {
   margin-bottom: 40px;
 }
 
-.game-over__high-score {
-  margin-bottom: 40px;
-  display: flex;
-  flex-direction: column;
-}
-
-.game-over__high-score p {
+#game-over__share-text {
+  color: #3d47d9;
   margin: 0 0 10px 0;
 }
 
 .game-over__share-logos {
+  margin-bottom: 40px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
