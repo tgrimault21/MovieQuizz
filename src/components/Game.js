@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Questions from './Questions';
+import {app_id} from '../config.json'
 
 export default function Game(props) {
   const [timer, setTimer] = useState(60);
@@ -11,7 +12,7 @@ export default function Game(props) {
   // SDK Facebook
   window.fbAsyncInit = function() {
     window.FB.init({
-      appId            : '1249033968791061',
+      appId            : app_id,
       autoLogAppEvents : true,
       xfbml            : true,
       version          : 'v2.10'

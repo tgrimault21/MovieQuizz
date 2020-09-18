@@ -3,16 +3,17 @@ import Game from './components/Game';
 import Welcome from './components/Welcome';
 import useSWR from 'swr';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {tmdb_key} from './config.json'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
 function App() {
   // Fetch the top 100 Popular actors
-  const { data, error } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=1', fetcher)
-  const { data: data2, error: error2 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=2', fetcher)
-  const { data: data3, error: error3 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=3', fetcher)
-  const { data: data4, error: error4 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=4', fetcher)
-  const { data: data5, error: error5 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key=9e2b8a1d23b0a9148f8bb5bf8f512bd8&language=en-US&page=5', fetcher)
+  const { data, error } = useSWR('https://api.themoviedb.org/3/person/popular?api_key='+tmdb_key+'&language=en-US&page=1', fetcher)
+  const { data: data2, error: error2 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key='+tmdb_key+'&language=en-US&page=2', fetcher)
+  const { data: data3, error: error3 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key='+tmdb_key+'&language=en-US&page=3', fetcher)
+  const { data: data4, error: error4 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key='+tmdb_key+'&language=en-US&page=4', fetcher)
+  const { data: data5, error: error5 } = useSWR('https://api.themoviedb.org/3/person/popular?api_key='+tmdb_key+'&language=en-US&page=5', fetcher)
 
   const actors = []
   const movies = []
