@@ -9,6 +9,14 @@ npm start
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+Create a config.json file in the /src directory :
+```json
+{
+  "tmdb_key": "your TheMovieDB api key",
+  "app_id": "the id of your facebook app"
+}
+```
+
 ## Specs
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
